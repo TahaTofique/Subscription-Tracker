@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subscription Tracker</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+</head>
+<body>
+
+<header>
+
+    <h1>💳 Subscription Tracker</h1>
+
+    <button id="themeBtn">🌙</button>
+
+</header>
+
+<section class="stats">
+
+    <div class="card">
+        <h3>Monthly</h3>
+        <h2 id="monthly">$0</h2>
+    </div>
+
+    <div class="card">
+        <h3>Yearly</h3>
+        <h2 id="yearly">$0</h2>
+    </div>
+
+    <div class="card">
+        <h3>Subscriptions</h3>
+        <h2 id="count">0</h2>
+    </div>
+
+</section>
+
+<section class="form">
+
+    <input
+        type="text"
+        id="name"
+        placeholder="Subscription Name">
+
+    <input
+        type="number"
+        id="price"
+        placeholder="Monthly Price">
+
+    <select id="category">
+
+        <option>Streaming</option>
+        <option>Music</option>
+        <option>Gaming</option>
+        <option>AI</option>
+        <option>Productivity</option>
+        <option>Cloud</option>
+        <option>Education</option>
+        <option>Other</option>
+
+    </select>
+
+    <input
+        type="date"
+        id="renewal">
+
+    <button id="addBtn">
+        Add Subscription
+    </button>
+
+</section>
+
+<section class="search">
+
+    <input
+        type="text"
+        id="search"
+        placeholder="Search subscriptions...">
+
+</section>
+
+<section>
+
+    <table>
+
+        <thead>
+
+        <tr>
+
+            <th>Name</th>
+            <th>Category</th>
+            <th>Price</th>
+            <th>Renewal</th>
+            <th>Days Left</th>
+            <th>Delete</th>
+
+        </tr>
+
+        </thead>
+
+        <tbody id="list">
+
+        </tbody>
+
+    </table>
+
+</section>
+
+<footer>
+
+    Made with ❤️ using HTML, CSS & JavaScript
+
+</footer>
+
+<script src="script.js"></script>
+
+</body>
+</html>

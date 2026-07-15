@@ -1,120 +1,189 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Subscription Tracker</title>
 
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<title>SubscriptionHub</title>
+
+<link rel="stylesheet" href="style.css">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 
 </head>
+
 <body>
+
+<div class="bg"></div>
+
+<div class="container">
 
 <header>
 
-    <h1>💳 Subscription Tracker</h1>
+<div>
 
-    <button id="themeBtn">🌙</button>
+<h1>SubscriptionHub</h1>
+
+<p>Manage all your subscriptions in one beautiful dashboard.</p>
+
+</div>
+
+<button id="themeBtn">
+
+<i class="fa-solid fa-moon"></i>
+
+</button>
 
 </header>
 
 <section class="stats">
 
-    <div class="card">
-        <h3>Monthly</h3>
-        <h2 id="monthly">$0</h2>
-    </div>
+<div class="card">
 
-    <div class="card">
-        <h3>Yearly</h3>
-        <h2 id="yearly">$0</h2>
-    </div>
+<div class="icon">
 
-    <div class="card">
-        <h3>Subscriptions</h3>
-        <h2 id="count">0</h2>
-    </div>
+<i class="fa-solid fa-wallet"></i>
+
+</div>
+
+<div>
+
+<h4>Monthly</h4>
+
+<h2 id="monthly">$0</h2>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="icon">
+
+<i class="fa-solid fa-calendar-days"></i>
+
+</div>
+
+<div>
+
+<h4>Yearly</h4>
+
+<h2 id="yearly">$0</h2>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="icon">
+
+<i class="fa-solid fa-layer-group"></i>
+
+</div>
+
+<div>
+
+<h4>Subscriptions</h4>
+
+<h2 id="count">0</h2>
+
+</div>
+
+</div>
 
 </section>
 
-<section class="form">
+<section class="addBox">
 
-    <input
-        type="text"
-        id="name"
-        placeholder="Subscription Name">
+<h2>Add Subscription</h2>
 
-    <input
-        type="number"
-        id="price"
-        placeholder="Monthly Price">
+<div class="grid">
 
-    <select id="category">
+<input
+id="name"
+placeholder="Netflix">
 
-        <option>Streaming</option>
-        <option>Music</option>
-        <option>Gaming</option>
-        <option>AI</option>
-        <option>Productivity</option>
-        <option>Cloud</option>
-        <option>Education</option>
-        <option>Other</option>
+<input
+id="price"
+type="number"
+placeholder="Monthly Price">
 
-    </select>
+<select id="category">
 
-    <input
-        type="date"
-        id="renewal">
+<option>Streaming</option>
 
-    <button id="addBtn">
-        Add Subscription
-    </button>
+<option>Music</option>
+
+<option>Gaming</option>
+
+<option>AI</option>
+
+<option>Education</option>
+
+<option>Cloud</option>
+
+<option>Productivity</option>
+
+<option>Other</option>
+
+</select>
+
+<input
+id="renewal"
+type="date">
+
+</div>
+
+<button id="addBtn">
+
+<i class="fa-solid fa-plus"></i>
+
+Add Subscription
+
+</button>
 
 </section>
 
-<section class="search">
+<section class="searchBox">
 
-    <input
-        type="text"
-        id="search"
-        placeholder="Search subscriptions...">
+<div class="search">
+
+<i class="fa-solid fa-magnifying-glass"></i>
+
+<input
+id="search"
+placeholder="Search subscriptions...">
+
+</div>
 
 </section>
 
 <section>
 
-    <table>
+<div
+id="cards"
+class="cards">
 
-        <thead>
-
-        <tr>
-
-            <th>Name</th>
-            <th>Category</th>
-            <th>Price</th>
-            <th>Renewal</th>
-            <th>Days Left</th>
-            <th>Delete</th>
-
-        </tr>
-
-        </thead>
-
-        <tbody id="list">
-
-        </tbody>
-
-    </table>
+</div>
 
 </section>
 
 <footer>
 
-    Made with ❤️ using HTML, CSS & JavaScript
+----------
 
 </footer>
+
+</div>
 
 <script src="script.js"></script>
 

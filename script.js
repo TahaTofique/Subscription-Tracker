@@ -1,44 +1,44 @@
+const cards = document.getElementById("cards");
+
 const nameInput = document.getElementById("name");
 const priceInput = document.getElementById("price");
 const categoryInput = document.getElementById("category");
 const renewalInput = document.getElementById("renewal");
-const addBtn = document.getElementById("addBtn");
-const list = document.getElementById("list");
-const search = document.getElementById("search");
 
 const monthly = document.getElementById("monthly");
 const yearly = document.getElementById("yearly");
 const count = document.getElementById("count");
 
+const search = document.getElementById("search");
+const addBtn = document.getElementById("addBtn");
+
 const themeBtn = document.getElementById("themeBtn");
 
 let subscriptions =
-    JSON.parse(localStorage.getItem("subscriptions")) || [];
+JSON.parse(localStorage.getItem("subscriptions")) || [];
 
-render();
+/* ---------------- Theme ---------------- */
 
-// -------------------- Theme --------------------
-
-if(localStorage.getItem("theme")==="dark"){
-    document.body.classList.add("dark");
-    themeBtn.textContent="☀️";
+if(localStorage.getItem("theme")==="light"){
+    document.body.classList.add("light");
+    themeBtn.innerHTML='<i class="fa-solid fa-sun"></i>';
 }
 
 themeBtn.onclick=()=>{
 
-    document.body.classList.toggle("dark");
+    document.body.classList.toggle("light");
 
-    if(document.body.classList.contains("dark")){
-        localStorage.setItem("theme","dark");
-        themeBtn.textContent="☀️";
-    }else{
+    if(document.body.classList.contains("light")){
         localStorage.setItem("theme","light");
-        themeBtn.textContent="🌙";
+        themeBtn.innerHTML='<i class="fa-solid fa-sun"></i>';
+    }else{
+        localStorage.setItem("theme","dark");
+        themeBtn.innerHTML='<i class="fa-solid fa-moon"></i>';
     }
 
 }
 
-// -------------------- Add --------------------
+/* ---------------- Add ---------------- */
 
 addBtn.onclick=()=>{
 
@@ -49,8 +49,7 @@ addBtn.onclick=()=>{
 
     if(!name || !price || !renewal){
 
-        alert("Please fill every field.");
-
+        alert("Please complete all fields.");
         return;
 
     }
@@ -71,158 +70,187 @@ addBtn.onclick=()=>{
 
     save();
 
-    clearInputs();
-
-    render();
-
-}
-
-// -------------------- Save --------------------
-
-function save(){
-
-    localStorage.setItem(
-
-        "subscriptions",
-
-        JSON.stringify(subscriptions)
-
-    );
-
-}
-
-// -------------------- Clear --------------------
-
-function clearInputs(){
-
     nameInput.value="";
     priceInput.value="";
     renewalInput.value="";
 
-}
-
-// -------------------- Delete --------------------
-
-function deleteSubscription(id){
-
-    subscriptions=subscriptions.filter(
-
-        sub=>sub.id!==id
-
-    );
-
-    save();
-
     render();
 
 }
 
-// -------------------- Days Left --------------------
+/* ---------------- Save ---------------- */
+
+function save(){
+
+localStorage.setItem(
+
+"subscriptions",
+
+JSON.stringify(subscriptions)
+
+);
+
+}
+
+/* ---------------- Delete ---------------- */
+
+function deleteSubscription(id){
+
+subscriptions=subscriptions.filter(
+
+s=>s.id!==id
+
+);
+
+save();
+
+render();
+
+}
+
+/* ---------------- Days Left ---------------- */
 
 function daysLeft(date){
 
-    const today=new Date();
+const today=new Date();
 
-    const renew=new Date(date);
+today.setHours(0,0,0,0);
 
-    const diff=renew-today;
+const renew=new Date(date);
 
-    return Math.ceil(
+renew.setHours(0,0,0,0);
 
-        diff/(1000*60*60*24)
+return Math.ceil(
 
-    );
+(renew-today)/(1000*60*60*24)
+
+);
 
 }
 
-// -------------------- Render --------------------
+/* ---------------- Search ---------------- */
+
+search.oninput=render;
+
+/* ---------------- Render ---------------- */
 
 function render(){
 
-    list.innerHTML="";
+cards.innerHTML="";
 
-    let total=0;
+const keyword=search.value.toLowerCase();
 
-    let filtered=subscriptions.filter(sub=>
+let total=0;
 
-        sub.name.toLowerCase()
+const filtered=subscriptions.filter(sub=>{
 
-        .includes(
+return sub.name.toLowerCase().includes(keyword);
 
-            search.value.toLowerCase()
+});
 
-        )
+count.textContent=filtered.length;
 
-    );
+filtered.forEach(sub=>{
 
-    filtered.forEach(sub=>{
+total+=sub.price;
 
-        total+=sub.price;
+const days=daysLeft(sub.renewal);
 
-        const tr=document.createElement("tr");
+let status="🟢";
 
-        tr.innerHTML=`
+if(days<=7) status="🔴";
+else if(days<=15) status="🟡";
 
-        <td>${sub.name}</td>
+cards.innerHTML+=`
 
-        <td>
+<div class="subCard">
 
-            <span class="badge">
+<div class="subHeader">
 
-            ${sub.category}
+<h3>${sub.name}</h3>
 
-            </span>
+<span class="badge">
 
-        </td>
+${sub.category}
 
-        <td>
+</span>
 
-        $${sub.price.toFixed(2)}
+</div>
 
-        </td>
+<div class="price">
 
-        <td>
+$${sub.price.toFixed(2)}
 
-        ${sub.renewal}
+<span style="font-size:16px;color:#94a3b8">
 
-        </td>
+/ month
 
-        <td>
+</span>
 
-        ${daysLeft(sub.renewal)}
+</div>
 
-        </td>
+<p class="info">
 
-        <td>
+📅 Renewal
 
-        <button
+<b>${sub.renewal}</b>
 
-        class="deleteBtn"
+</p>
 
-        onclick="deleteSubscription(${sub.id})"
+<p class="info">
 
-        >
+${status}
 
-        Delete
+${days} day${days!==1?"s":""} left
 
-        </button>
+</p>
 
-        </td>
+<button
 
-        `;
+class="deleteBtn"
 
-        list.appendChild(tr);
+onclick="deleteSubscription(${sub.id})"
 
-    });
+>
 
-    monthly.textContent="$"+total.toFixed(2);
+Delete Subscription
 
-    yearly.textContent="$"+(total*12).toFixed(2);
+</button>
 
-    count.textContent=filtered.length;
+</div>
+
+`;
+
+});
+
+monthly.textContent="$"+total.toFixed(2);
+
+yearly.textContent="$"+(total*12).toFixed(2);
+
+/* Empty */
+
+if(filtered.length===0){
+
+cards.innerHTML=`
+
+<div class="empty">
+
+<i class="fa-solid fa-wallet"></i>
+
+<h2>No subscriptions yet</h2>
+
+<p>
+
+Start by adding your first subscription.
+
+</p>
+
+</div>
+
+`;
 
 }
 
-// -------------------- Search --------------------
+}
 
-search.oninput=render;
+render();
